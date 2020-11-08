@@ -74,7 +74,7 @@ function Parent(){
 - 在大多数情况下，应当避免使用 ref 这样的命令式代码。useImperativeHandle 应当与 forwardRef 一起使用
 - 父组件可以使用操作子组件中的多个 ref
 
-```
+```javascript
 import React,{useState,useEffect,createRef,useRef,forwardRef,useImperativeHandle} from 'react';
 
 const Child = forwardRef((props,parentRef) => {
@@ -130,7 +130,7 @@ function Parent(){
 - Hook 是一种复用状态逻辑的方式，它不复用 state 本身
 - 事实上 Hook 的每次调用都有一个完全独立的 state
 
-```
+```javascript
 import React, { useLayoutEffect, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
