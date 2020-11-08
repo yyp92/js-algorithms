@@ -2,7 +2,7 @@
 
 ## react生命周期废弃了哪几个? diff算法？ 与vue区别？
 ### react生命周期
-- https://juejin.im/post/6844903808489750541
+- [生命周期详解](https://juejin.im/post/6844903808489750541)
 
 - v16.3之前的生命周期图谱：
 ![v16.3之前的生命周期图谱](../img/react-life-before.png)
