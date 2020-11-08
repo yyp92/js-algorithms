@@ -2,6 +2,7 @@
 - [经典面试题](https://juejin.im/post/6847902225423925255)
 
 
+
 ### 什么会导致内存泄漏
 - [彻底掌握js内存泄漏以及如何避免](https://juejin.im/post/6844903917986267143)
     - 全局变量
@@ -19,12 +20,6 @@
 #### ajax原理
 - https://juejin.im/post/6844903618764603399
 - https://my.oschina.net/u/4263001/blog/3220073
-
-
-
-
-
-### http、https
 
 
 
