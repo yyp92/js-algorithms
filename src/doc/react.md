@@ -13,7 +13,7 @@
 - https://juejin.im/post/6844904021233238024
 - https://juejin.im/post/6844903679418433550
 
-- - -
+
 
 ## 性能优化
 - https://juejin.im/post/6844903985338400782
@@ -39,7 +39,8 @@
 - forwardRef 可以在父组件中操作子组件的 ref 对象
 - forwardRef 可以将父组件中的 ref 对象转发到子组件中的 dom 元素上
 - 子组件接受 props 和 ref 作为参数
-```
+
+```javaScript
 const Child = React.forwardRef((props,ref) => {
   return (
     <input type="text" ref={ref}/>

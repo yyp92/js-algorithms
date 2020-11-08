@@ -1,3 +1,6 @@
+## markdown
+- [基本语法](https://www.jianshu.com/p/191d1e21f7ed)
+
 ## 算法
 
 ### 时间和空间复杂度资料：
