@@ -1,6 +1,16 @@
 ## js
 - [经典面试题](https://juejin.im/post/6847902225423925255)
 
+
+### 什么会导致内存泄漏
+- [彻底掌握js内存泄漏以及如何避免](https://juejin.im/post/6844903917986267143)
+    - 全局变量
+    - 被遗忘的定时器和回调函数
+    - DOM引用 （可以用WeakMap）
+    - 闭包
+
+
+
 ### promise原理，ajax原理
 #### promise原理 
 - https://juejin.im/post/6844904063570542599
@@ -16,11 +26,5 @@
 
 ### http、https
 
-
-
-
-
-## webpack相关
-#### 缓存、tree-shaking
 
 
