@@ -3,7 +3,7 @@
 ## react生命周期废弃了哪几个? diff算法？ 与vue区别？
 ### react生命周期
 - https://juejin.im/post/6844903808489750541
-![v16.3之前的生命周期图谱](/img/react-life-before.png)
+- ![v16.3之前的生命周期图谱](../img/react-life-before.png)
 
 ### 部分生命周期函数被弃用的原因(componentWillMount，componentWillReceiveProps，componentWillUpdate)
 - https://juejin.im/post/6844904021233238024
