@@ -3,7 +3,11 @@
 ## react生命周期废弃了哪几个? diff算法？ 与vue区别？
 ### react生命周期
 - https://juejin.im/post/6844903808489750541
-- ![v16.3之前的生命周期图谱](../img/react-life-before.png)
+
+- v16.3之前的生命周期图谱：
+![v16.3之前的生命周期图谱](../img/react-life-before.png)
+- v16.3之后的生命周期图谱：
+![v16.3之后的生命周期图谱](../img/react-life-after.png)
 
 ### 部分生命周期函数被弃用的原因(componentWillMount，componentWillReceiveProps，componentWillUpdate)
 - https://juejin.im/post/6844904021233238024
@@ -21,8 +25,8 @@
 
 
 ## hooks
-    - useCallback：接收一个内联回调函数参数和一个依赖项数组（子组件依赖父组件的状态，即子组件会使用到父组件的值） ，useCallback 会返回回调函数的 memoized 版本，该回调函数仅在某个依赖项改变时才会更新.
-    - useMemo：把创建函数和依赖项数组作为参数传入 useMemo，它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算.
+- useCallback：接收一个内联回调函数参数和一个依赖项数组（子组件依赖父组件的状态，即子组件会使用到父组件的值） ，useCallback 会返回回调函数的 memoized 版本，该回调函数仅在某个依赖项改变时才会更新.
+- useMemo：把创建函数和依赖项数组作为参数传入 useMemo，它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算.
 
 ### useState
 - useState 唯一的参数就是初始 state
