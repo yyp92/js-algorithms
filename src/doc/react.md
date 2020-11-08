@@ -84,7 +84,52 @@ const App = () => (
 
 
 ## 性能优化
-- https://juejin.im/post/6844903985338400782
+### 避免调停
+- [避免调停](https://juejin.im/post/6846687604130185230)
+1. react 组件中 不要在render中绑定方法this, 直接在构造函数中绑定this
+```javascript
+constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+}
+handleClick() {
+    console.log('点击')
+}
+render() {
+    return (
+        <div>
+            // 第一种，构造函数每一次渲染的时候只会执行一遍；(最好)
+            <button onclick={this.handleClick}></button>
+
+            // 第二种方法，在每次render()的时候都会重新执行一遍函数；
+            <button onclick={this.handleClick.bind(this)}></button>
+
+            // 第三种方法的话，每一次render()的时候，都会生成一个新的箭头函数，即使两个箭头函数的内容是一样的。
+            <button onclick={() => this.handleClick()}></button>
+        </div>
+    )
+}
+```
+
+2. 当一个组件的 props 或 state 变更，React 会将最新返回的元素与之前渲染的元素进行对比，以此决定是否有必要更新真实的 DOM。当它们不相同时，React 会更新该 DOM。
+- 即使 React 只更新改变了的 DOM 节点，重新渲染仍然花费了一些时间。在大部分情况下它并不是问题，不过如果它已经慢到让人注意了，你可以通过覆盖生命周期方法 shouldComponentUpdate 来进行提速。该方法会在重新渲染前被触发。其默认实现总是返回 true，让 React 执行更新：
+```javascript
+shouldComponentUpdate(nextProps, nextState) {
+ // 进行比较判断是否更新
+  return true;
+}
+
+<!--在大部分情况下，你可以继承 React.PureComponent 以代替手写 shouldComponentUpdate()。它用当前与之前 props 和 state 的浅比较覆写了 shouldComponentUpdate() 的实现。-->
+```
+
+3. 设置列表的唯一的key
+
+
+### 虚拟化长列表
+- [长列表优化之虚拟列表](https://juejin.im/post/6844903893441183751)
+- 如果你的应用渲染了长列表（上百甚至上千的数据），我们推荐使用“虚拟滚动”技术。这项技术会在有限的时间内仅渲染有限的内容，并奇迹般地降低重新渲染组件消耗的时间，以及创建 DOM 节点的数量。
+- react-window 和 react-virtualized 是热门的虚拟滚动库。 它们提供了多种可复用的组件，用于展示列表、网格和表格数据。 如果你想要一些针对你的应用做定制优化，你也可以创建你自己的虚拟滚动组件，就像 Twitter 所做的。
+
 
 ### 减少渲染次数
 - 类组件：可以使用 pureComponent；
