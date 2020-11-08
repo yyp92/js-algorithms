@@ -10,8 +10,11 @@
 ![v16.3之后的生命周期图谱](../img/react-life-after.png)
 
 ### 部分生命周期函数被弃用的原因(componentWillMount，componentWillReceiveProps，componentWillUpdate)
-- https://juejin.im/post/6844904021233238024
-- https://juejin.im/post/6844903679418433550
+- [你真的了解 React 生命周期吗](https://juejin.im/post/6844904021233238024)
+- [聊聊React v16.3的UNSAFE类生命周期](https://juejin.im/post/6844903679418433550)
+
+- 原因：
+    - React 17.0 版本： 推出新的渲染方式——异步渲染（ Async Rendering），提出一种可被打断的生命周期，而可以被打断的阶段正是实际 dom 挂载之前的虚拟 dom 构建阶段，也就是要被去掉的三个生命周期 componentWillMount，componentWillReceiveProps 和 componentWillUpdate。
 
 
 
@@ -66,6 +69,16 @@ const App = () => (
     </Suspense>
   </Router>
 )
+```
+
+- require.ensure() (已经不建议使用)
+```javascript
+{
+    path: 'handover-contract-apply',
+    getComponent(location, callback) {
+        require.ensure([], () => callback(null, require('./HandoverPage/ApplyManage').default));
+    }
+}
 ```
 
 
