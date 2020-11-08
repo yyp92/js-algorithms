@@ -1,4 +1,4 @@
-*react*
+# react
 
 ## react生命周期废弃了哪几个? diff算法？ 与vue区别？
 ### react生命周期
@@ -15,6 +15,61 @@
 
 
 
+## react 组件懒加载
+- [延迟加载](https://juejin.im/post/6844903778928476174)
+- [react-loadable原理浅析](https://juejin.im/post/6844903560325398541)
+
+### react-loadable(react npm 库， < v16.6.0)
+```javascript
+import {loadable} from '@loadable/component';
+import * as React from 'react';
+
+export const LazyDemo = loadable(
+    () => import('./demo'),
+);
+```
+
+### 通过react lazy 和 Suspense ( > v16.6.0 )
+- 组件中
+```javascript
+import React, {lazy, Suspense} from 'react';
+const OtherComponent = lazy(() => import('./OtherComponent'));
+
+function MyComponent() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <OtherComponent />
+    </Suspense>
+  );
+}
+```
+
+- 路由
+```javascript
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+
+const Home = lazy(() => import('./routes/Home'));
+const UserManage = lazy(() => import('./routes/UserManage'));
+const AssetManage = lazy(() => import('./routes/AssetManage'));
+const AttendanceManage = lazy(() => import('./routes/AttendanceManage'));
+
+const App = () => (
+  <Router>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Switch>
+        <Route exact path="/" component={Home}/>
+        <Route path="/userManage" component={UserManage}/>
+        <Route path="/assetManage" component={AssetManage}/>
+        <Route path="/attendanceManage" component={AttendanceManage}/>
+      </Switch>
+    </Suspense>
+  </Router>
+)
+```
+
+
+
 ## 性能优化
 - https://juejin.im/post/6844903985338400782
 
@@ -22,6 +77,7 @@
 - 类组件：可以使用 pureComponent；
 - 函数组件：使用 React.memo(高阶组件) ，将函数组件传递给 memo 之后，就会返回一个新的组件，新组件的功能：如果接受到的属性不变，则不重新渲染函数；
 - React.PureComponent 的 shouldComponentUpdate() 仅对对象进行浅比较。 如果这些包含复杂的数据结构，它可能会在更深层数据差异比较时发生判断偏差。 所以扩展 PureComponent 只能用于具有简单 props 和 state 的组件，或者在知道深层数据结构已更改时使用forceUpdate() 来强制更新的组件。 或者，考虑使用不可变对象来帮助嵌套数据的快速比较。
+
 
 
 ## hooks

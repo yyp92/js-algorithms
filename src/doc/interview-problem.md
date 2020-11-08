@@ -1,4 +1,5 @@
 ## js
+- [经典面试题](https://juejin.im/post/6847902225423925255)
 
 ### promise原理，ajax原理
 #### promise原理 
