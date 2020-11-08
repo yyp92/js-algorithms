@@ -40,7 +40,7 @@
 - forwardRef 可以将父组件中的 ref 对象转发到子组件中的 dom 元素上
 - 子组件接受 props 和 ref 作为参数
 
-```javaScript
+```javascript
 const Child = React.forwardRef((props,ref) => {
   return (
     <input type="text" ref={ref}/>
