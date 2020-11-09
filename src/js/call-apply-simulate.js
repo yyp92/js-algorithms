@@ -2,12 +2,12 @@
     call
 */
 // 第三版
-Function.prototype.call2 = function (context) {
+Function.prototype.call2 = function(context) {
     var context = context || window;
     context.fn = this;
 
     var args = [];
-    for(var i = 1, len = arguments.length; i < len; i++) {
+    for (var i = 1, len = arguments.length; i < len; i++) {
         args.push('arguments[' + i + ']');
     }
 
@@ -21,7 +21,7 @@ Function.prototype.call2 = function (context) {
 /* 
     apply
 */
-Function.prototype.apply = function (context, arr) {
+Function.prototype.apply = function(context, arr) {
     var context = Object(context) || window;
     context.fn = this;
 

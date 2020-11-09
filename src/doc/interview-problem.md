@@ -68,3 +68,25 @@ function singleton (data) {
 
 
 
+## js里hasOwnProperty和in的区别
+### hasOwnProperty
+- 判断一个对象属性里是否包含某个key，key为字符串,此方法不会去判断原型
+- 用法：obj.hasOwnProperty(key) //obj为对象 key为所要判断的字符串
+```javascript
+var obj={
+    key:123
+};
+obj.hasOwnProperty('key'); // true
+obj.hasOwnProperty('hasOwnProperty'); // false
+```
+
+### in
+- 判断一个对象属性或原型里面是否包含某个key，key为字符串
+- key in obj // obj为对象 key为所要判断的字符串
+```javascript
+var obj={
+    key:123
+};
+'key' in obj; // true
+'hasOwnProperty' in obj; // true
+```
