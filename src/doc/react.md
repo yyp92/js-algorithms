@@ -30,6 +30,7 @@
 - 注意： 
     - setState的“异步”并不是说内部由异步代码实现，其实本身执行的过程和代码都是同步的，只是合成事件和钩子函数的调用顺序在更新之前，导致在合成事件和钩子函数中没法立马拿到更新后的值，形式了所谓的“异步”，当然可以通过第二个参数 setState(partialState, callback) 中的callback拿到更新后的结果。
 
+- 例子：
 ```javascript
 class Example extends React.Component {
   constructor() {
@@ -63,8 +64,9 @@ class Example extends React.Component {
 };
 ```
 
-- [setState原理](https://juejin.im/post/6844903718219956232)
-- [深入setState机制](https://github.com/sisterAn/blog/issues/26)
+- 资料：
+    - [setState原理](https://juejin.im/post/6844903718219956232)
+    - [深入setState机制](https://github.com/sisterAn/blog/issues/26)
 
 
 
