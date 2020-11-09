@@ -18,6 +18,10 @@
 
 
 
+## react 中的 setState为什么异步？能不能同步？什么时候异步？什么时候同步？
+
+
+
 ## react 组件懒加载
 - [延迟加载](https://juejin.im/post/6844903778928476174)
 - [react-loadable原理浅析](https://juejin.im/post/6844903560325398541)

@@ -90,3 +90,15 @@ var obj={
 'key' in obj; // true
 'hasOwnProperty' in obj; // true
 ```
+
+
+
+
+
+## 面试
+### 浏览器内核原理
+### BFC
+### grid、flex
+### react 虚拟dom的原理， key
+### hooks memo，callBack， hooks的优化
+ 
