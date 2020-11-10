@@ -1,6 +1,26 @@
 # react
 
-## react生命周期废弃了哪几个? diff算法？ 与vue区别？
+## react 虚拟dom（virtual dom）
+- 本质上是 JavaScript 对象，这个对象就是更加轻量级的对 DOM 的描述。
+- React是这么干的：你给我一个数据，我根据这个数据生成一个全新的Virtual DOM，然后跟我上一次生成的Virtual DOM去 diff，得到一个Patch，然后把这个Patch打到浏览器的DOM上去。完事。并且这里的patch显然不是完整的虚拟DOM，而是新的虚拟DOM和上一次的虚拟DOM经过diff后的差异化的部分。
+
+- 图谱：
+![虚拟dom](../img/virtual-dom.png)
+
+- 资料
+    - [深入分析虚拟DOM的渲染原理和特性](https://segmentfault.com/a/1190000018891454)
+    - [深入理解react中的虚拟DOM、diff算法](https://www.cnblogs.com/zhuzhenwei918/p/7271305.html)
+
+
+
+
+## react 事件机制
+- [React事件机制](https://segmentfault.com/a/1190000018391074)
+
+
+
+
+## react生命周期废弃了哪几个? 与vue区别？
 ### react生命周期
 - [生命周期详解](https://juejin.im/post/6844903808489750541)
 
@@ -15,6 +35,7 @@
 
 - 原因：
     - React 17.0 版本： 推出新的渲染方式——异步渲染（ Async Rendering），提出一种可被打断的生命周期，而可以被打断的阶段正是实际 dom 挂载之前的虚拟 dom 构建阶段，也就是要被去掉的三个生命周期 componentWillMount，componentWillReceiveProps 和 componentWillUpdate。
+
 
 
 
@@ -66,6 +87,7 @@ class Example extends React.Component {
 - 资料：
     - [setState原理](https://juejin.im/post/6844903718219956232)
     - [深入setState机制](https://github.com/sisterAn/blog/issues/26)
+
 
 
 
@@ -193,13 +215,27 @@ shouldComponentUpdate(nextProps, nextState) {
 - useCallback：接收一个内联回调函数参数和一个依赖项数组（子组件依赖父组件的状态，即子组件会使用到父组件的值） ，useCallback 会返回回调函数的 memoized 版本，该回调函数仅在某个依赖项改变时才会更新.
 - useMemo：把创建函数和依赖项数组作为参数传入 useMemo，它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算.
 
+
 ### useState
 - useState 唯一的参数就是初始 state
 - useState 会返回一个数组：一个 state，一个更新 state 的函数
     - 在初始化渲染期间，返回的状态 (state) 与传入的第一个参数 (initialState) 值相同
     - 你可以在事件处理函数中或其他一些地方调用这个函数。它类似 class 组件的 this.setState，但是它不会把新的 state 和旧的 state 进行合并，而是直接替换
 
-### forwardRef (hooks再父子通信时会用到)
+
+### useCallback
+- 缓存回调函数，避免传入的回调每次都是新的函数实例而导致依赖组件重新渲染，具有性能优化的效果；
+
+
+### useMemo
+- 用于缓存传入的 props，避免依赖的组件每次都重新渲染；
+
+
+### useRef
+- 获取组件的真实节点
+
+
+### forwardRef (hooks 在父子通信时会用到)
 - 因为函数组件没有实例，所以函数组件无法像类组件一样可以接收 ref 属性
 - forwardRef 可以在父组件中操作子组件的 ref 对象
 - forwardRef 可以将父组件中的 ref 对象转发到子组件中的 dom 元素上
