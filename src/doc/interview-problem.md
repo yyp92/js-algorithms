@@ -96,7 +96,6 @@ var obj={
 
 
 ## 面试
-### 浏览器内核原理
 ### BFC
 ### grid、flex
  
