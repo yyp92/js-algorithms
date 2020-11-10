@@ -366,3 +366,33 @@ function Counter2(){
 
 ReactDOM.render(<><Counter1 /><Counter2 /></>, document.getElementById('root'));
 ```
+
+
+### 性能优化
+- 钩子函数必须增加依赖项，以减少没必要的重复渲染。
+
+
+
+
+##  HOC(高阶组件)
+- 简述:
+    - 高阶组件不是组件，是 增强函数，可以输入一个元组件，返回出一个新的增强组件；
+    - 高阶组件的主要作用是 代码复用，操作 状态和参数；
+
+- 例子：
+```javascript
+function proxyHoc(Comp) {
+ 	return class extends React.Component {
+ 		render() {
+ 			const newProps = {
+ 				name: 'tayde',
+ 				age: 1,
+ 			}
+ 			return <Comp {...this.props} {...newProps} />
+ 		}
+ 	}
+ }
+```
+
+- 缺点：
+    - 首先是被包裹组件的静态方法会消失，这其实也是很好理解的，我们将组件当做参数传入函数中，返回的已经不是原来的组件，而是一个新的组件，原来的静态方法自然就不存在了。如果需要保留，我们可以手动将原组件的方法拷贝给新的组件，或者使用hoist-non-react-statics之类的库来进行拷贝。
