@@ -16,13 +16,16 @@ const debounce = (func, wait = 50) => {
   // 这里返回的函数是每次用户实际调用的防抖函数
   // 如果已经设定过定时器了就清空上一次的定时器
   // 开始一个新的定时器，延迟执行用户传入的方法
-  return function(...args) {
+  return function() {
+    const context = this;
+    const args = arguments;
+
     if (timer) {
         clearTimeout(timer)
     }
 
     timer = setTimeout(() => {
-        func.apply(this, args)
+        func.apply(context, args)
     }, wait)
   }
 }
@@ -135,7 +138,7 @@ Function.prototype.myCall = function(context = window, ...args) {
   let fn = Symbol("fn");
   context[fn] = func;
 
-// 重点代码，利用this指向，相当于context.caller(...args)
+  // 重点代码，利用this指向，相当于context.caller(...args)
   let res = context[fn](...args);
 
   delete context[fn];
@@ -185,6 +188,244 @@ function myNew(fn, ...args) {
     let instance = Object.create(fn.prototype);
     let res = fn.apply(instance, args);
     
-    return typeof res === 'object' ? res: instance;
+    return typeof res === 'object' ? res : instance;
 }
+```
+
+
+
+## 模拟promise
+- [JavaScript进阶之手写Promise](https://juejin.im/post/6844903857852514317)
+
+- 简单的
+```javascript
+const pending = 'PENDING';
+const rejecting = 'REJECTED';
+const fulfilled = 'FULFILLED';
+function Promise1(executor) {
+  var that = this;
+  that.status = pending;
+  that.value = null;
+  that.error = null;
+  that.resolvedCallbacks = [];
+  that.rejectedCallbacks = [];
+  
+  function resolve(val) {
+    if (that.status === pending) {
+      that.status = fulfilled;
+      that.value = val;
+      that.resolvedCallbacks.map(cb => cb(that.value));
+    }
+  }
+  
+  function reject(val) {
+    if (that.status === pending) {
+      that.status = rejecting;
+      that.error = val;
+      that.rejectedCallbacks.map(cb => cb(that.value));
+    }
+  }
+  
+  try {
+    executor(resolve, reject);
+  }
+  catch (e) {
+    reject(e);
+  }
+}
+
+Promise1.prototype.then = function (onFulfilled, onRejected) {
+  var that = this;
+  //为了保证兼容性，then的参数只能是函数，如果不是要防止then的穿透问题
+  onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v
+  onRejected =
+    typeof onRejected === 'function'
+      ? onRejected
+      : r => {
+          throw r
+        }
+
+  if (that.status === pending) {
+    that.resolvedCallbacks.push(onFulfilled)
+    that.rejectedCallbacks.push(onRejected)
+  }
+  
+  if (that.status === fulfilled) {
+    onFulfilled(that.value);
+  }
+  
+  if (that.status === rejecting) {
+    onRejected(that.error)
+  }
+};
+```
+
+- 复杂的
+```javascript
+// 最近基本的满足then的链式调用
+const pending = 'PENDING';
+const rejecting = 'REJECTED';
+const fulfilled = 'FULFILLED';
+
+function Promise1(executor) {
+  var that = this;
+  that.status = pending;
+  that.value = null;
+  that.error = null;
+  that.resolvedCallbacks = [];
+  that.rejectedCallbacks = [];
+  
+  function resolve(val) {
+    if (that.status === pending) {
+      that.status = fulfilled;
+      that.value = val;
+      that.resolvedCallbacks.map(cb => cb(that.value));
+    }
+  }
+  
+  function reject(val) {
+    if (that.status === pending) {
+      that.status = rejecting;
+      that.error = val;
+      that.rejectedCallbacks.map(cb => cb(that.value));
+    }
+  }
+  
+  try {
+    executor(resolve, reject);
+  }
+  catch (e) {
+    reject(e);
+  }
+}
+
+Promise1.prototype.then = function (onFulfilled, onRejected) {
+  var that = this;
+  let promise2 = null;
+  // 为了保证兼容性，then的参数只能是函数，如果不是要防止then的穿透问题
+  onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v
+  onRejected =
+    typeof onRejected === 'function'
+      ? onRejected
+      : r => {
+          throw r
+        }
+
+  if (that.status === pending) {
+      return promise = new Promise1((resolve, reject) => {
+          that.resolvedCallbacks.push(() => {
+              try {
+                  const x = onFulfilled(that.value);
+                  resolvePromise(promise,x,resolve,reject);
+              }
+              catch (e) {
+                  reject(e);
+              }
+          });
+              
+          that.rejectedCallbacks.push(() => {
+              try {
+                  const x = onRejected(that.error);
+              }
+              catch (e) {
+                  reject(e);
+              }
+          });
+      })
+  }	
+
+  // 成功态
+  if (that.status === FULFILLED) {
+      return promise2 = new Promise((resolve, reject) => {
+          setTimeout(() => {
+              try {
+                  let x = onFulfilled(that.value);
+                  resolvePromise(promise2, x, resolve, reject); 
+              }
+              catch(e) {
+                  reject(e); 
+              }
+          });
+      })
+  }
+
+  // 失败态
+  if (that.status === REJECTED) {
+      return promise2 = new Promise((resolve, reject) => {
+          setTimeout(() => {
+              try {
+                  let x = onRejected(that.reason);
+                  resolvePromise(promise2, x, resolve, reject);
+              }
+              catch(e) {
+                  reject(e);
+              }
+          });
+      });
+  }
+};
+
+/**
+ * 对resolve 进行改造增强 针对x不同值情况 进行处理
+ * @param  {promise} promise2 promise1.then方法返回的新的promise对象
+ * @param  {[type]} x         promise1中onFulfilled的返回值
+ * @param  {[type]} resolve   promise2的resolve方法
+ * @param  {[type]} reject    promise2的reject方法
+ */
+function resolvePromise(promise2, x, resolve, reject) {
+    if (promise2 === x) {  
+        // 如果从onFulfilled中返回的x 就是promise2 就会导致循环引用报错
+        return reject(new TypeError('循环引用'));
+    }
+    
+    // 避免多次调用
+    let called = false;
+
+    // 如果x是一个promise对象 （该判断和下面 判断是不是thenable对象重复 所以可有可无）
+    if (x instanceof Promise) { // 获得它的终值 继续resolve
+        if (x.status === PENDING) { // 如果为等待态需等待直至 x 被执行或拒绝 并解析y值
+            x.then(y => {
+                resolvePromise(promise2, y, resolve, reject);
+            }, reason => {
+                reject(reason);
+            });
+        }
+        else { 
+            // 如果 x 已经处于执行态/拒绝态(值已经被解析为普通值)，用相同的值执行传递下去 
+            x.then(resolve, reject);
+        }
+    }
+    // 如果 x 为对象或者函数
+    else if (x != null && ((typeof x === 'object') || (typeof x === 'function'))) {
+        // 是否是thenable对象（具有then方法的对象/函数）
+        try {
+            let then = x.then;
+
+            if (typeof then === 'function') {
+                then.call(x, y => {
+                    if(called) return;
+                    called = true;
+                    resolvePromise(promise2, y, resolve, reject);
+                }, reason => {
+                    if(called) return;
+                    called = true;
+                    reject(reason);
+                })
+            }
+            // 说明是一个普通对象/函数
+            else {
+                resolve(x);
+            }
+        }
+        catch(e) {
+            if(called) return;
+            called = true;
+            reject(e);
+        }
+    }
+    else {
+        resolve(x);
+    }
+}
+
 ```
