@@ -1,5 +1,36 @@
 # css
 
+## css伪类、伪元素（例如table斑马线怎么实现）
+- 伪类，更多的定义的是状态。常见的伪类有 :hover，:active，:focus，:visited，:link，:not，:first-child，:last-child等等。
+- 伪元素，不存在于DOM树中的虚拟元素，它们可以像正常的html元素一样定义css，但无法使用JavaScript获取。常见伪元素有 ::before，::after，::first-letter，::first-line等等。
+- CSS3明确规定了，伪类用一个冒号(:)来表示，而伪元素则用两个冒号(::)来表示。但目前因为兼容性的问题，它们的写法可以是一致的，都用一个冒号(:)就可以了，所以非常容易混淆。
+
+- CSS3中的伪类
+    - :root 选择文档的根元素，等同于 html 元素
+    - :empty 选择没有子元素的元素
+    - :target 选取当前活动的目标元素
+    - :not(selector) 选择除 selector 元素意外的元素
+    - :enabled 选择可用的表单元素
+    - :disabled 选择禁用的表单元素
+    - :checked 选择被选中的表单元素
+    - :nth-child(n) 匹配父元素下指定子元素，在所有子元素中排序第n
+    - :nth-last-child(n) 匹配父元素下指定子元素，在所有子元素中排序第n，从后向前数
+    - :nth-child(odd) 、 :nth-child(even) 、 :nth-child(3n+1)
+    - :first-child 、 :last-child 、 :only-child
+    - :nth-of-type(n) 匹配父元素下指定子元素，在同类子元素中排序第n
+    - :nth-last-of-type(n) 匹配父元素下指定子元素，在同类子元素中排序第n，从后向前数
+    - :nth-of-type(odd) 、 :nth-of-type(even) 、 :nth-of-type(3n+1)
+    - :first-of-type 、 :last-of-type 、 :only-of-type
+- CSS3中的伪元素
+    - ::after 已选中元素的最后一个子元素
+    - ::before 已选中元素的第一个子元素
+    - ::first-letter 选中某个款级元素的第一行的第一个字母
+    - ::first-line 匹配某个块级元素的第一行
+    - ::selection 匹配用户划词时的高亮部分
+
+
+
+
 ## BFC
 - BFC（Block Formatting Context）格式化上下文，是Web页面中盒模型布局的CSS渲染模式，指一个独立的渲染区域或者说是一个隔离的独立容器。
 

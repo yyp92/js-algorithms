@@ -25,6 +25,7 @@ function flatten(arr) {
             res.push(arr[i]);
         }
     }
+    
     return res;
 }
 
