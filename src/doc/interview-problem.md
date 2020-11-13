@@ -107,9 +107,19 @@ var obj={
 
 
 
-## css伪类、伪元素（例如table斑马线怎么实现）
 
 ## js 生成器、迭代器
+- [迭代器和生成器](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Iterators_and_generators)
+
+### 迭代器
+- 迭代器是一个**特殊的对象**，该对象包含一个next方法，每次调用next方法后返回一个结果对象，结果对象中包含一个value属性和一个done属性。如果一个对象原型上具有Symbol.iterator属性的实现，那么该对象就可以通过for...of进行迭代遍历访问。具有内置迭代对象的数据类型有String、Array、Map、Set、类数组。
+- 迭代器可以理解为是一种规范，所有的对象都有next方法，next方法的参数是对象的返回value值，done的Boolean值判断是否继续迭代。迭代器语法也可以自己封装。
+
+### 生成器
+- 生成器是一个返回迭代器的函数，是迭代器生成的工具。
+
+
+
 
 ## 描述js原型、原型链、闭包
 
