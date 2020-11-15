@@ -101,6 +101,7 @@ var obj={
 ## react router 原理（怎么监听到url变化）
 
 ## react 如果特别的多的dom，react内部是怎么处理的
+- 通过React.lazy()和Suspense来解决（懒加载）。
 
 ## webpack 原理（入口是js，怎么会输出到HTML中，如果往HTML中再加入js怎么办）
 
