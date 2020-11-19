@@ -99,6 +99,8 @@ var obj={
 
 
 ## react router 原理（怎么监听到url变化）
+- 主要依赖与history库
+- [react-router的实现原理](https://segmentfault.com/a/1190000004527878)
 
 ## react 如果特别的多的dom，react内部是怎么处理的
 - 通过React.lazy()和Suspense来解决（懒加载）。

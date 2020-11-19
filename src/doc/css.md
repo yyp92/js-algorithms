@@ -53,12 +53,16 @@
 
 
 ## flex
-- [flex弹性布局](https://juejin.im/post/6846687604541227015)
+- 注意：
+    - 设为 Flex 布局以后，子元素的float、clear和vertical-align属性将失效。
 - flex:1
     - flex:1 1 auto;
     - flex-grow属性用于设置或检索弹性盒子的扩展比率，flex元素仅在子元素宽度之和小于容器的时候才会发生伸展
     - flex-shrink属性用于指定flex盒子的收缩规则，flex元素仅在子元素宽度之和大于容器的时候才会发生收缩
     - flex-basis用于设置弹性盒子收缩伸展的基准值
+- 资料
+    - [Flex 布局教程：语法篇](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
+    - [flex弹性布局](https://juejin.im/post/6846687604541227015)
 
 
 

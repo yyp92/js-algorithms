@@ -6,28 +6,32 @@
     实现 add(1)(2)(3)
 */
 
-// 参数长度不固定
-function currying() {
-    let args = [...arguments]
+/* 
+    当我们直接对函数使用 alert() 或 console.log() 时，函数的 toString() 方法会被调用。
+*/
 
-    temp.getValue = () => {
-        return args.reduce((a, b) => a + b, 0)
+// 函数柯里化
+function add() {
+    // 第一次执行时，定义一个数组专门用来存储所有的参数
+    var _args = Array.prototype.slice.call(arguments);
+
+    // 在内部声明一个函数，利用闭包的特性保存_args并收集所有的参数值
+    var _adder = function() {
+        _args.push(...arguments);
+
+        return _adder;
+    };
+
+    // 利用toString隐式转换的特性，当最后执行时隐式转换，并计算最终的值返回
+    _adder.toString = function () {
+        return _args.reduce(function (a, b) {
+            return a + b;
+        }, 0);
     }
-
-    function temp(...arg) {
-        console.log('arg: ', arg)
-        if(arg.length){
-            args = [
-                ...args,
-                ...arg
-            ]
-
-            return temp
-        }
-    }
-
-    return temp
+    return _adder;
 }
 
-console.log(currying(1)(2)(3).getValue());
-console.log(currying()(2)(3)(4, 5).getValue());
+console.log(add(1)(2)(3))                // 6
+console.log(add(1, 2, 3)(4))             // 10
+console.log(add(1)(2)(3)(4)(5))          // 15
+console.log(add(2, 6)(1))                // 9

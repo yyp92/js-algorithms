@@ -47,3 +47,11 @@
     - Etag是服务器响应请求时，返回当前资源文件的一个唯一标识(由服务器生成)。
     - If-None-Match是客户端再次发起该请求时，携带上次请求返回的唯一标识Etag值，通过此字段值告诉服务器该资源上次请求返回的唯一标识值。
 
+
+
+
+## 事件循环
+- v8引擎只提供了堆和调用栈。
+- 资料
+    - [在线动画演示](http://latentflip.com/loupe)
+    - [参考视频](https://www.youtobe.com/watch?v=8aGhZQkoFbQ)

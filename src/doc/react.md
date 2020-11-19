@@ -10,6 +10,7 @@
 - 资料
     - [深入分析虚拟DOM的渲染原理和特性](https://segmentfault.com/a/1190000018891454)
     - [深入理解react中的虚拟DOM、diff算法](https://www.cnblogs.com/zhuzhenwei918/p/7271305.html)
+    - [【React深入】深入分析虚拟DOM的渲染原理和特性](https://juejin.im/post/6844903824683958286#heading-18)
 
 
 
@@ -32,8 +33,8 @@
 ### 生命周期钩子详解
 - getDerivedStateFromProps
     - **getDerivedStateFromProps**本来（React v16.3中）是只在创建和更新（由父组件引发部分）中调用。如果不是由父组件引发，那么getDerivedStateFromProps也不会被调用，如自身setState引发或者forceUpdate引发。
-    
-- getSnapshotBeforeUpdat
+
+- getSnapshotBeforeUpdate
     - **getSnapshotBeforeUpdate()** 被调用于render之后，可以读取但无法使用DOM的时候。它使您的组件可以在可能更改之前从DOM捕获一些信息（例如滚动位置）。此生命周期返回的任何值都将作为参数传递给componentDidUpdate（）。
 ```javascript
 class ScrollingList extends React.Component {
@@ -255,22 +256,22 @@ shouldComponentUpdate(nextProps, nextState) {
 
 ## hooks
 - useCallback：接收一个内联回调函数参数和一个依赖项数组（子组件依赖父组件的状态，即子组件会使用到父组件的值） ，useCallback 会返回回调函数的 memoized 版本，该回调函数仅在某个依赖项改变时才会更新.
-- useMemo：把创建函数和依赖项数组作为参数传入 useMemo，它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算.
+- useMemo：把创建函数和依赖项数组作为参数传入 useMemo，它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算。
 
 
 ### useState
 - useState 唯一的参数就是初始 state
 - useState 会返回一个数组：一个 state，一个更新 state 的函数
     - 在初始化渲染期间，返回的状态 (state) 与传入的第一个参数 (initialState) 值相同
-    - 你可以在事件处理函数中或其他一些地方调用这个函数。它类似 class 组件的 this.setState，但是它不会把新的 state 和旧的 state 进行合并，而是直接替换
+    - 你可以在事件处理函数中或其他一些地方调用这个函数。它类似 class 组件的 this.setState，但是它不会把新的 state 和旧的 state 进行合并，而是直接替换。
 
 
 ### useCallback
-- 缓存回调函数，避免传入的回调每次都是新的函数实例而导致依赖组件重新渲染，具有性能优化的效果；
+- 缓存回调函数，避免传入的回调每次都是新的函数实例而导致**依赖**组件重新渲染，具有性能优化的效果。
 
 
 ### useMemo
-- 用于缓存传入的 props，避免依赖的组件每次都重新渲染；
+- 用于缓存传入的 props，避免**依赖**的组件每次都重新渲染。
 
 
 ### useRef
@@ -284,7 +285,7 @@ shouldComponentUpdate(nextProps, nextState) {
 - 子组件接受 props 和 ref 作为参数
 
 ```javascript
-const Child = React.forwardRef((props,ref) => {
+const Child = React.forwardRef((props, ref) => {
   return (
     <input type="text" ref={ref}/>
   )
@@ -318,16 +319,17 @@ function Parent(){
 - 父组件可以使用操作子组件中的多个 ref
 
 ```javascript
-import React,{useState,useEffect,createRef,useRef,forwardRef,useImperativeHandle} from 'react';
+import React, {useState, useEffect, createRef, useRef, forwardRef, useImperativeHandle} from 'react';
 
-const Child = forwardRef((props,parentRef) => {
+const Child = forwardRef((props, parentRef) => {
     // 子组件内部自己创建 ref 
     let focusRef = useRef();
     let inputRef = useRef();
-    useImperativeHandle(parentRef,()=>(
-      // 这个函数会返回一个对象
-      // 该对象会作为父组件 current 属性的值
-      // 通过这种方式，父组件可以使用操作子组件中的多个 ref
+
+    useImperativeHandle(parentRef, ()=>(
+        // 这个函数会返回一个对象
+        // 该对象会作为父组件 current 属性的值
+        // 通过这种方式，父组件可以使用操作子组件中的多个 ref
         return {
             focusRef,
             inputRef,
@@ -340,6 +342,7 @@ const Child = forwardRef((props,parentRef) => {
             }
         }
     });
+
     return (
         <>
             <input ref={focusRef}/>
@@ -348,8 +351,10 @@ const Child = forwardRef((props,parentRef) => {
     )
 })
 
-function Parent(){
-  const parentRef = useRef();//{current:''}
+function Parent() {
+  // {current:''}
+  const parentRef = useRef();
+
   function getFocus(){
     parentRef.current.focus();
     // 因为子组件中没有定义这个属性，实现了保护，所以这里的代码无效
@@ -357,6 +362,7 @@ function Parent(){
     parentRef.current.changeText('<script>alert(1)</script>');
     console.log(parentRef.current.name);
   }
+
   return (
       <>
         <ForwardChild ref={parentRef}/>
@@ -368,7 +374,7 @@ function Parent(){
 
 ### 自定义 Hook
 - 自定义 Hook 更像是一种约定，而不是一种功能。如果函数的名字以 use 开头，并且调用了其他的 Hook，则就称其为一个自定义 Hook
-- 有时候我们会想要在组件之间重用一些状态逻辑，之前要么用 render props ，要么用高阶组件，要么使用 redux
+- 有时候我们会想要在组件之间重用一些状态逻辑，之前要么用 render props，要么用高阶组件，要么使用 redux
 - 自定义 Hook 可以让你在不增加组件的情况下达到同样的目的
 - Hook 是一种复用状态逻辑的方式，它不复用 state 本身
 - 事实上 Hook 的每次调用都有一个完全独立的 state
@@ -378,31 +384,41 @@ import React, { useLayoutEffect, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 function useNumber(){
-  let [number,setNumber] = useState(0);
-  useEffect(()=>{
-    setInterval(()=>{
-        setNumber(number=>number+1);
-    },1000);
-  },[]);
-  return [number,setNumber];
+  let [number, setNumber] = useState(0);
+
+  useEffect(() => {
+    setInterval(() => {
+        setNumber(number => number + 1);
+    }, 1000);
+  }, []);
+
+  return [number, setNumber];
 }
 
 // 每个组件调用同一个 hook，只是复用 hook 的状态逻辑，并不会共用一个状态
-function Counter1(){
-    let [number,setNumber] = useNumber();
+function Counter1() {
+    let [number, setNumber] = useNumber();
     return (
-        <div><button onClick={()=>{
-            setNumber(number+1)
-        }}>{number}</button></div>
+        <div>
+          <button onClick={() => {
+              setNumber(number + 1)
+          }}>
+            {number}
+          </button>
+        </div>
     )
 }
 
-function Counter2(){
-    let [number,setNumber] = useNumber();
+function Counter2() {
+    let [number, setNumber] = useNumber();
     return (
-        <div><button  onClick={()=>{
-            setNumber(number+1)
-        }}>{number}</button></div>
+        <div>
+          <button onClick={() => {
+              setNumber(number + 1)
+          }}>
+            {number}
+          </button>
+        </div>
     )
 }
 
@@ -412,6 +428,65 @@ ReactDOM.render(<><Counter1 /><Counter2 /></>, document.getElementById('root'));
 
 ### 性能优化
 - 钩子函数必须增加依赖项，以减少没必要的重复渲染。
+
+
+### 优缺点
+#### 优点
+- 更容易复用代码(复用状态)
+- 清爽的代码风格
+    - 函数式编程风格，函数式组件、状态保存在运行环境、每个功能都包裹在函数中，整体风格更清爽，更优雅。另外，对比类组件，函数组件里面的unused状态和unused-method更容易被发现。 
+
+#### 缺点
+- 不要在useEffect里面写太多的依赖项，划分这些依赖项成多个单一功能的useEffect。其实这点是遵循了软件设计的“单一职责模式”。
+- 函数的运行是独立的，每个函数都有一份独立的作用域。函数的变量是保存在运行时的作用域里面，当我们有异步操作的时候，经常会碰到异步回调的变量引用是之前的，也就是旧的（解决：状态不同步的问题，使用useRef）。
+```javascript
+// 未使用useRef
+import React, { useState } from "react";
+const Counter = () => {
+  const [counter, setCounter] = useState(0);
+  
+  const onAlertButtonClick = () => {
+    setTimeout(() => {
+        // 0
+        alert("Value: " + counter);
+    }, 3000);
+  };
+
+  return (
+    <div>
+      <p>You clicked {counter} times.</p>
+      <button onClick={() => setCounter(counter + 1)}>Click me</button>
+      <button onClick={onAlertButtonClick}>
+        Show me the value in 3 seconds
+      </button>
+    </div>
+  );
+};
+ 
+// 使用useRef
+const Counter = () => {
+  const [counter, setCounter] = useState(0);
+  const counterRef = useRef(counter);
+  const onAlertButtonClick = () => {
+    setTimeout(() => {
+        // 1
+        alert("Value: " + counterRef.current);
+    }, 3000);
+  };
+  useEffect(() => {
+    counterRef.current = counter;
+  });
+  return (
+    <div>
+      <p>You clicked {counter} times.</p>
+      <button onClick={() => setCounter(counter + 1)}>Click me</button>
+      <button onClick={onAlertButtonClick}>
+        Show me the value in 3 seconds
+      </button>
+    </div>
+  );
+};
+```
 
 
 
