@@ -36,12 +36,12 @@ var quickSort = function(arr) {
 */
 function bubbleSort(arr) {
     // 已经完成的标志位
-    let done
+    // let done
 
     let len = arr.length
 
     for (let i = 0; i < len - 1; i++) {
-        done = true
+        // done = true
 
         for (let j = 0; j < len - 1 - i; j++) {
             // 可以省略
@@ -50,15 +50,21 @@ function bubbleSort(arr) {
             // }
 
             if (arr[j] > arr[j + 1]) {
-                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
-                done = false
+                // 左边是原来的顺序，右边是排后的顺序
+                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                
+                // done = false
             }
         }
 
-        if (done) {
-            return arr
-        }
+        // if (done) {
+        //     return arr
+        // }
     }
     
     return arr;
 }
+
+// test
+console.log(bubbleSort([5, 3, 4, 1])) // [ 1, 3, 4, 5 ]
+

@@ -77,7 +77,25 @@ class ScrollingList extends React.Component {
 - [聊聊React v16.3的UNSAFE类生命周期](https://juejin.im/post/6844903679418433550)
 
 - 原因：
-    - React 17.0 版本： 推出新的渲染方式——异步渲染（ Async Rendering），提出一种可被打断的生命周期，而可以被打断的阶段正是实际 dom 挂载之前的虚拟 dom 构建阶段，也就是要被去掉的三个生命周期 componentWillMount，componentWillReceiveProps 和 componentWillUpdate。
+    - React 17.0 版本： 推出新的渲染方式——异步渲染（ Async Rendering），提出一种可被打断的生命周期，而可以被打断的阶段正是实际 dom 挂载之前的虚拟 dom 构建阶段，也就是要被去掉的三个生命周期 componentWillMount，componentWillReceiveProps 和 componentWillUpdate。 
+
+
+
+
+## props 和 state 区别
+### props
+- props: 函数组件的props就是函数的入参组件。
+- 类组件：this.props包含被该组件调用或者定义的props。
+
+#### state
+- 组件中的state包含了随时可能发生变化的数据。
+- state是由用户定义，是一个普通的JavaScript对象。
+
+### 区别
+- props是传递给组件的（类似于函数的形参），而state是在组件内部被组件自己管理的（类似于在一个函数内声明的变量）。
+- props是不可以被修改的，所有的react组件都必须像纯函数一样保护他们的props不被修改。
+- state是在组件中创建，一般是在constructor中初始化state。
+- state是多变的，可被修改的。每次setState都是异步更新的。
 
 
 
@@ -513,3 +531,41 @@ function proxyHoc(Comp) {
 
 - 缺点：
     - 首先是被包裹组件的静态方法会消失，这其实也是很好理解的，我们将组件当做参数传入函数中，返回的已经不是原来的组件，而是一个新的组件，原来的静态方法自然就不存在了。如果需要保留，我们可以手动将原组件的方法拷贝给新的组件，或者使用hoist-non-react-statics之类的库来进行拷贝。
+
+
+
+
+## jsx语法
+### 优点
+- React DOM 在渲染所有输入内容之前，默认会进行**转义**。它可以确保在你的应用中，永远不会注入那些并非自己明确编写的内容。所有的内容在渲染之前都被转换成了字符串。这样可以有效地防止 XSS（cross-site-scripting, 跨站脚本）攻击。
+
+### 语法
+- 变量
+- 三元运算
+- 数组map方法等（有return返回值的）
+
+```javascript
+// 变量
+let text = 'text';
+ReactDOM.render(
+    <div>{text}</div>
+, document.getElementById('root'));
+
+// 三元
+let isStr = true;
+ReactDOM.render(
+    <div>{isStr ? 'string' : 11}</div>
+, document.getElementById('root'));
+
+// map
+ReactDOM.render(
+  <div>
+      {/* map()方法有返回值 */}
+      {
+        arr.map((item,index) => {
+          return <h2 key={index}>{item}</h2>
+        })
+      }
+  </div>
+, document.getElementById('root'));
+```

@@ -148,26 +148,26 @@ class MyPromise {
             }
     
             if (this.status === PENDING) {
-                    // 订阅
-                    this.onFulfilledCallbacks.push(() => {
-                        try {
-                            let x = onFulfilled(this.value);
-                            resolvePromise(promise2, x, resolve, reject);
-                        }
-                        catch (e) {
-                            reject(e)
-                        }
-                    });
-        
-                    this.onRejectedCallbacks.push(() => {
-                        try {
-                            let x = onRejected(this.reason);
-                            resolvePromise(promise2, x, resolve, reject);
-                        }
-                        catch (e) {
-                            reject(e)
-                        }
-                    });
+                // 订阅
+                this.onFulfilledCallbacks.push(() => {
+                    try {
+                        let x = onFulfilled(this.value);
+                        resolvePromise(promise2, x, resolve, reject);
+                    }
+                    catch (e) {
+                        reject(e)
+                    }
+                });
+    
+                this.onRejectedCallbacks.push(() => {
+                    try {
+                        let x = onRejected(this.reason);
+                        resolvePromise(promise2, x, resolve, reject);
+                    }
+                    catch (e) {
+                        reject(e)
+                    }
+                });
             }
         });
 

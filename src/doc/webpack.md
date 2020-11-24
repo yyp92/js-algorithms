@@ -136,3 +136,23 @@ resolve: {
   extensions: ['.js', '.json', '.jsx', '.css']
 }
 ```
+
+
+
+
+## loader和plugin的区别
+### loader
+- 用于对模块源码的转换，loader描述了webpack如何处理非javascript模块，并且在buld中引入这些依赖。
+
+### plugin
+- 目的在于解决loader无法实现的其他事，从打包优化和压缩，到重新定义环境变量，功能强大到可以用来处理各种各样的任务。
+
+### 资料
+- [webpack的loader和plugin的区别](https://www.cnblogs.com/magicg/p/13643923.html)
+
+
+
+
+## 热更新
+### 资料
+- [轻松理解webpack热更新原理](https://blog.csdn.net/chern1992/article/details/106893227/)

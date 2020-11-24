@@ -7,6 +7,8 @@
 
 
 ## nvm（非windows系统），nvm-windows(windows系统)
+### nvm-window
+- [nvm-window](https://github.com/coreybutler/nvm-windows)
 
 
 
@@ -16,4 +18,12 @@
 
 ### 非全局模块，不能直接使用，需要require('模块')
 - fs模块
+
+
+
+
+## fs模块
+### 文件路径问题
+- __dirname: 表示，当前正在执行的 js 文件所在的目录。
+- __filename：表示，当前正在执行的 js 文件的完整路径。（就是加上文件名）
 

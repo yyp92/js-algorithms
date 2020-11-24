@@ -52,4 +52,3 @@ function add(a) {
  
 console.log(add(1)(3)) // 4
 console.log(add(1)(3)(5)) // 9
-
