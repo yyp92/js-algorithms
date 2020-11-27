@@ -16,7 +16,17 @@
 
 
 
+
 ## http options 请求方法
 - OPTIONS请求即预检请求，可用于检测服务器允许的http方法
 
 - [什么时候会发送options请求](https://juejin.im/post/6844903821634699277)
+
+
+
+
+## Content-Type (常见的)
+- application/x-www-form-urlencoded --> 这是浏览器原生的form表单类型，或者说是表单默认的类型。
+- application/json --> 现在绝大部分的请求都会以json形式进行传输，post会将序列化后的json字符串直接塞进请求体中。
+- multipart/form-data --> 用于在表单中上传文件。
+- application/octet-stream --> 二进制流数据（如常见的文件下载）。

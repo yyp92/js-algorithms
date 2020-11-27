@@ -88,7 +88,7 @@ function deepCopy(obj) {
     let result;
 
     // 判断是否是简单数据类型，
-    if (typeof obj == "object") {
+    if (typeof obj == "object" && obj !== null) {
         // 复杂数据类型
         result = obj.constructor == Array ? [] : {};
 
@@ -195,7 +195,7 @@ function myNew(fn, ...args) {
 
 
 
-## 模拟promise
+## 模拟promise （**待验证**）
 - [JavaScript进阶之手写Promise](https://juejin.im/post/6844903857852514317)
 
 - 简单的

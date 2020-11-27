@@ -46,6 +46,36 @@
 
 
 
+## Set 和 Map
+```javascript
+// Set
+new Set([1, 2, 3]) // Set(3) {1, 2, 3}
+
+// WeakSet --> 成员只能是对象
+new WeakSet([
+  [1, 11],
+  [2, 22],
+  [3, 33]]
+) // WeakSet {[1, 11], [2, 22], [3, 33]}
+
+// Map
+new Map([
+  ['name', 'aa'],
+  ['age', 20]
+]) // Map(2) {"name" => "aa", "age" => 20}
+
+// WeakMap (只接受对象作为键名)
+const key1 = [1, 2]
+const key2 = [3, 4]
+new WeakMap([
+  [key1, 11],
+  [key2, 22]
+]) // WeakMap {Array(2) => 22, Array(2) => 11}
+
+```
+
+
+
 
 ## 描述js原型、原型链、闭包
 ### 原型
@@ -86,7 +116,7 @@
 
 ## js里hasOwnProperty和in的区别
 ### hasOwnProperty
-- 判断一个对象属性里是否包含某个key，key为字符串,此方法不会去判断原型
+- 判断一个对象属性里是否包含某个key，key为字符串，此方法不会去判断原型
 ```javascript
 // 用法：obj.hasOwnProperty(key) // obj为对象 key为所要判断的字符串
 var obj={

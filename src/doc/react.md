@@ -149,6 +149,49 @@ class Example extends React.Component {
     - [setState原理](https://juejin.im/post/6844903718219956232)
     - [深入setState机制](https://github.com/sisterAn/blog/issues/26)
 
+### setState写法
+- 批量执行
+```javascript
+// 参数是对象，如果同时执行多次，只有第一个是有效的
+/* 
+  state = {
+    count: 0
+  }
+
+  对象：
+    this.setState({
+      count: this.state.count++
+    })
+    this.setState({
+      count: this.state.count++
+    })
+    this.setState({
+      count: this.state.count++
+    })
+
+    结果： 1
+
+  函数：
+    this.setState(preState => ({
+      count: this.state.count++
+    }))
+    this.setState(preState => ({
+      count: this.state.count++
+    }))
+    this.setState(preState => ({
+      count: this.state.count++
+    }))
+
+    结果： 3
+*/
+setState(obj, cb)
+
+// 参数是函数
+// preState 上一次的值
+// fn ==> (preState) => {}
+setState(fn, cb)
+```
+
 
 
 
