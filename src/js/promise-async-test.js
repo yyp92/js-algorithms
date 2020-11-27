@@ -1,3 +1,4 @@
+// promise
 const p1 = () => {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -40,9 +41,16 @@ async function createQueue(tasks) {
     // })
 
     // async await
-    await p1();
-    await p2();  
-    await p3();
+    // await p1();
+    // await p2();  
+    // await p3();
+    // return 'done';
+
+    // async await 优化版(继发执行，使用for循环)
+    for (let i = 0; i < tasks.length; i++) {
+        await tasks[i]();
+    }
+
     return 'done';
 }
 
@@ -50,3 +58,39 @@ async function createQueue(tasks) {
 createQueue([p1, p2, p3]).then((msg) => {
     console.log(msg) // 'done'
 })
+
+
+
+
+// async
+// 多个异步同时继发
+function getFoo() {
+    console.log('getFoo---')
+    setTimeout(() => {
+        console.log('getFoo')
+    }, 3000)
+}
+
+function getBar() {
+    console.log('getBar---')
+    setTimeout(() => {
+        console.log('getBar')
+    }, 3000)
+}
+
+async function runAsync() {
+    // 顺序触发
+    await getFoo()
+    await getBar()
+
+    // 同时触发的写法
+    // 1
+    let [foo, bar] = await Promise.all([getFoo(), getBar()])
+
+    // 2
+    let fooPromise = getFoo()
+    let barPromise = getBar()
+    let foo = await fooPromise
+    let bar = await barPromise
+}
+runAsync()

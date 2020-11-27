@@ -28,7 +28,7 @@
 - constructor
 ```javascript
   let arr = []
-  arr .constructor === Array; // true
+  arr.constructor === Array; // true
 ```
 
 - Object.prototype.toString.call()

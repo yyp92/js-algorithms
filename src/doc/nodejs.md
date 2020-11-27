@@ -7,8 +7,12 @@
 
 
 ## nvm（非windows系统），nvm-windows(windows系统)
+- nodejs 版本管理工具
 ### nvm-window
 - [nvm-window](https://github.com/coreybutler/nvm-windows)
+
+### nvm
+- [nvm](https://github.com/nvm-sh/nvm)
 
 
 
@@ -26,4 +30,8 @@
 ### 文件路径问题
 - __dirname: 表示，当前正在执行的 js 文件所在的目录。
 - __filename：表示，当前正在执行的 js 文件的完整路径。（就是加上文件名）
+
+
+### error-first 错误优先
+- nodejs 函数第一个参数都是err（没有错误就为 null）
 

@@ -1,4 +1,5 @@
 /* 
+    promise/A+ 规范：https://promisesaplus.com/
     手写promise， 目前只实现了：then的链式调用，catch
 */
 

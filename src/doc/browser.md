@@ -14,6 +14,13 @@
 
 
 
+
+## 浏览器reflow 和 layout 过程
+- https://www.youtube.com/watch?v=ZTnlxlA5kGw
+
+
+
+
 ## 缓存
 - [资料](https://juejin.im/entry/6844903593275817998)
 - 图谱：
