@@ -1,6 +1,11 @@
 /* 
     promise/A+ 规范：https://promisesaplus.com/
     手写promise， 目前只实现了：then的链式调用，catch
+
+    promise 链式调用
+    javascript jQuery 链式原理： return this
+    then 不具备this
+    promise 链式调用原理：return new Promise
 */
 
 const PENDING = 'PENDING';
@@ -172,6 +177,7 @@ class MyPromise {
             }
         });
 
+        // 返回新的 promise 来实现链式调用
         return promise2;
     }
 

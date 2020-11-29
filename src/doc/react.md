@@ -291,12 +291,20 @@ render() {
 2. 当一个组件的 props 或 state 变更，React 会将最新返回的元素与之前渲染的元素进行对比，以此决定是否有必要更新真实的 DOM。当它们不相同时，React 会更新该 DOM。
 - 即使 React 只更新改变了的 DOM 节点，重新渲染仍然花费了一些时间。在大部分情况下它并不是问题，不过如果它已经慢到让人注意了，你可以通过覆盖生命周期方法 shouldComponentUpdate 来进行提速。该方法会在重新渲染前被触发。其默认实现总是返回 true，让 React 执行更新：
 ```javascript
+// 方法1
 shouldComponentUpdate(nextProps, nextState) {
  // 进行比较判断是否更新
   return true;
 }
 
-<!--在大部分情况下，你可以继承 React.PureComponent 以代替手写 shouldComponentUpdate()。它用当前与之前 props 和 state 的浅比较覆写了 shouldComponentUpdate() 的实现。-->
+/* 
+方法2 
+在大部分情况下，你可以继承 React.PureComponent 以代替手写 shouldComponentUpdate()。它用当前与之前 props 和 state 的浅比较覆写了 shouldComponentUpdate() 的实现。 
+
+但是注意React.PureComponent 和 React.memo 是进行的浅比较, 通过这种结构的形式进行传递。
+*/
+const props = {...}
+<Comp {...props}>
 ```
 
 3. 设置列表的唯一的key

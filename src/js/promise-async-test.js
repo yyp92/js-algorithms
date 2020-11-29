@@ -94,3 +94,19 @@ async function runAsync() {
     let bar = await barPromise
 }
 runAsync()
+
+
+
+
+// 如果没有return， 则then函数是拿不到值，和promise一样
+async function isNeedReturn() {
+    await 'await1'
+    await 'await2'
+
+    return 'end'
+}
+isNeedReturn().then((res) => {
+    console.log('res: ', res)
+})
+// 有return值，res:  undefined
+// 无return值，res:  end
