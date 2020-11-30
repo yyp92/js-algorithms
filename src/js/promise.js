@@ -117,7 +117,7 @@ class MyPromise {
     // resolvePromise 来处理 x 是不是promise
     // setTimeout 来模拟异步
     // promise规范：then参数是可选的，要是没有参数则继续走下去
-    then (onFulfilled, onRejected) {
+    then(onFulfilled, onRejected) {
         // 给定参数默认值
         onFulfilled = typeof onFulfilled === 'function'
             ? onFulfilled

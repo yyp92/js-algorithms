@@ -18,7 +18,7 @@ function format(obj) {
     if (typeof obj === 'object' && obj !== null) {
         for (let key in obj) {
             json.push(
-                // 思想：无论是数组还是对象，成员最终还是简类型，所以运用递归的思想
+                // 思想：无论是数组还是对象，成员最终还是简单类型，所以运用递归的思想
                 Array.isArray(obj)
                     // 数组
                     ? format(obj[key])
@@ -31,7 +31,7 @@ function format(obj) {
         // 隐式的转为字符串： "" + [] + "" ==> 字符串
         str = Array.isArray(obj) ? '[' + json + ']' : '{' + json + '}';
     }
-    // 非对象和数组
+    // 非对象和数组 || null
     else {
         str = obj;
     }
