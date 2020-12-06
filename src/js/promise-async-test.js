@@ -108,8 +108,8 @@ async function isNeedReturn() {
 isNeedReturn().then((res) => {
     console.log('res: ', res)
 })
-// 有return值，res:  undefined
-// 无return值，res:  end
+// 有return值，res:  end
+// 无return值，res:  undefined
 
 
 

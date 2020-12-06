@@ -324,6 +324,10 @@ class Parent {
         this.age = props.age || 20
     }
 
+    static sayParent() {
+        console.log('sayParent')
+    }
+
     say() {
         console.log('parent')
     }
@@ -342,7 +346,15 @@ const c1 = new Child({name: 'Tom', age: 18})
 const c2 = new Child({name: 'JK', age: 16})
 const p1 = new Parent('PP', 30)
 
-console.log(c1.name, c1.age, c2.name, c2.age) // Tom 18 JK 16
-console.log(c1.say === c2.say) // true
-console.log(c1.constructor, c2.constructor, p1.constructor)
-// Child Child Parent
+// console.log(c1.name, c1.age, c2.name, c2.age) // Tom 18 JK 16
+// console.log(c1.say === c2.say) // true
+// console.log(c1.constructor, c2.constructor, p1.constructor) // Child Child Parent
+
+/* 
+    子类只能继承父类的静态方法
+    子类实例只能继承父类的实例方法
+*/
+// console.log(Child.say()) // Child.say is not a function
+// console.log(c1.say()) // parent
+console.log(Child.sayParent()) // sayParent
+console.log(c1.sayParent()) // c1.sayParent is not a function

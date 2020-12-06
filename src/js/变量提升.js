@@ -1,4 +1,5 @@
 function Test() {
+    // 因为前面没有声明的，所以会把全局的log方法覆盖掉
     log = () => {
         console.log(1)
     }
@@ -31,4 +32,6 @@ new Test().log() // 3
 
 // 此时log是window下的log，因为上面new Test()，重新给window下的log赋值
 log() // 1
+
+// 构造函数只能通过new 来调用
 Test().log() // Test(...).log is not a function
