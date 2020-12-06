@@ -110,3 +110,78 @@ isNeedReturn().then((res) => {
 })
 // 有return值，res:  undefined
 // 无return值，res:  end
+
+
+
+
+
+/* 
+    promise.all([]) --> Promise {<fulfilled>: Array(0)}
+    promise.all([1]) --> Promise {<fulfilled>: Array(1)}
+    promise.race([]) --> Promise {<pending>}
+    promise.race([1]) --> Promise {<fulfilled>: 1}
+*/
+// Promise {<fulfilled>: Array(0)}
+Promise.all([]).then(res => {
+    console.log('all []: ', res) // all []:  []
+})
+
+// Promise {<fulfilled>: Array(1)}
+Promise.all([1]).then(res => {
+    console.log('all [1]: ', res) // all [1]:  [1]
+})
+
+// Promise {<pending>}
+Promise.race([]).then(res => {
+    console.log('race []: ', res) // 因为是pending，所以没有执行then
+})
+
+// Promise {<fulfilled>: 1}
+Promise.race([1]).then(res => {
+    console.log('race [1]: ', res) // race [1]:  1
+})
+
+
+
+
+
+
+/* 
+    setTimeout promise(then catch 问题) async
+*/
+
+setTimeout(() => {
+    console.log(1)
+}, 0)
+
+asyncFunc()
+
+new Promise((resolve, reject) => {
+    console.log(2)
+    reject(3)
+})
+// .then(console.log, console.log)
+// .catch(() => {
+//     // 因为上面的then中出现了reject函数，所以下面的catch不会起作用
+//     console.log(4)
+// })
+.then(console.log)
+.catch(() => {
+    // 如果上面的then没有reject，则错误会被catch捕获到
+    console.log(4)
+}) // 5 2 6 4 1
+
+async function asyncFunc() {
+    await (function test() {
+        console.log(5)
+    })()
+    await new Promise((resolve, reject) => {
+        console.log(6)
+        reject(7)
+    })
+
+    // 因为上面的await中，出现了reject(7)，而且没有捕获错误，所以不往下执行了
+    console.log(8)
+}
+
+// 5 2 6 3 1

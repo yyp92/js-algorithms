@@ -68,3 +68,17 @@
 
 ## grid
 - [grid 网格布局](http://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html)
+
+
+
+
+# transition 和 animation
+### transition
+```javascript
+transition: <property> <duration> <timing-function> <delay>;
+
+// property 属性
+// duration 动画需要多长时间
+// timing-function 动画的类型，贝塞尔曲线
+// delay 经过多长时间触发
+```
