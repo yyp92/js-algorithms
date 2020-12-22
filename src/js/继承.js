@@ -358,3 +358,38 @@ const p1 = new Parent('PP', 30)
 // console.log(c1.say()) // parent
 console.log(Child.sayParent()) // sayParent
 console.log(c1.sayParent()) // c1.sayParent is not a function
+
+
+
+
+
+/* 
+    继承练习
+
+    字面量声明，相当于实例
+
+    Array.prototype --> 数组对象的原型对象
+    Function.prototype --> 函数对象的原型对象
+    Object.prototype --> 对象原型对象
+
+    所以 Array.prototype 和 Function.prototype 没有任何关系
+*/
+const obj = {}
+// console.log(obj.__proto__ === Function.prototype) // false
+// console.log(obj.__proto__ === Object.prototype) // true
+// console.log(obj.__proto__ === null) // false
+
+let arr = []
+console.log(arr.__proto__ === Array.prototype) // true
+console.log(arr.__proto__.__proto__ === Object.prototype) // true
+console.log(Array.prototype.__proto__ === Object.prototype) // true
+
+console.log(arr.__proto__ === Function.prototype) // false
+console.log(arr.__proto__.prototype === Function.prototype) // false
+console.log(Function.prototype.__proto__ === Object.prototype) // true
+
+console.log(arr.__proto__ === Object.prototype) // false
+console.log(arr.__proto__.prototype === Object.prototype) // false
+
+console.log(arr.__proto__ === null) // false
+console.log(Object.prototype.__proto__ === null) // false
