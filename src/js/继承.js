@@ -392,4 +392,4 @@ console.log(arr.__proto__ === Object.prototype) // false
 console.log(arr.__proto__.prototype === Object.prototype) // false
 
 console.log(arr.__proto__ === null) // false
-console.log(Object.prototype.__proto__ === null) // false
+console.log(Object.prototype.__proto__ === null) // true
